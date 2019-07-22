@@ -109,6 +109,9 @@ asm_disks_quantity: "${asm_disks_quantity}"
 # oradb_dbsnmp_password
 # oradb_asmsnmp_password
 
+# For user_update cron
+remote_user_filename: "${bastion_inventory}"
+
 EOF
 cat << EOF > ~/bootstrap_users.yml
 ---
