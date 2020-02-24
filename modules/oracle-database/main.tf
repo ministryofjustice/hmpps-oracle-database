@@ -37,9 +37,13 @@ locals {
   disks_quantity   = "${lookup(var.db_size, "disks_quantity")}"
   size             = "${lookup(var.db_size, "disk_size")}"
   tags_name_prefix = "${var.environment_name}-${var.server_name}"
+  database_type    = "${lookup(var.ansible_vars, "database_type", "NOTSET")}"
+  database_standby_number = "${lookup(var.ansible_vars, "database_standby_number")}"
+  high_availability_count = "${lookup(var.db_size, "high_availability_count")}"
 }
 
 resource "aws_instance" "oracle_db" {
+  count                  = "${(local.database_type=="primary") || (local.database_standby_number=="1" && local.high_availability_count<="2" && local.high_availability_count>="1") || (local.database_standby_number=="2" && local.high_availability_count="2")? 1 : 0 }"
   ami                    = "${var.ami_id}"
   instance_type          = "${local.instance_type}"
   subnet_id              = "${var.db_subnet}"
