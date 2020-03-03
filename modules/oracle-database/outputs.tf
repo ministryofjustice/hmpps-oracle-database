@@ -1,17 +1,17 @@
 output "public_fqdn" {
-  value = "${aws_route53_record.oracle_db_instance_public.fqdn}"
+  value = "${element(concat(aws_route53_record.oracle_db_instance_public.*.fqdn,list("")), 0)}"
 }
 
 output "internal_fqdn" {
-  value = "${aws_route53_record.oracle_db_instance_internal.fqdn}"
+  value = "${element(concat(aws_route53_record.oracle_db_instance_internal.*.fqdn,list("")), 0)}"
 }
 
 output "private_ip" {
-  value = "${aws_instance.oracle_db.private_ip}"
+  value = "${element(concat(aws_instance.oracle_db.*.private_ip,list("")), 0)}"
 }
 
 output "ami_id" {
-  value = "${aws_instance.oracle_db.id}"
+  value = "${element(concat(aws_instance.oracle_db.*.id,list("")), 0)}"
 }
 
 output "db_size_parameters" {

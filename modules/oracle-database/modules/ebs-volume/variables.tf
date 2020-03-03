@@ -14,9 +14,13 @@ variable "iops" {
   default = 1000
 }
 
-variable "instance_id" {}
+variable "instance_id" {
+  type = "list"
+}
 
-variable "availability_zone" {}
+variable "availability_zone" {
+  type = "list"
+}
 
 variable "encrypted" {
   description = "is volume encrypted"

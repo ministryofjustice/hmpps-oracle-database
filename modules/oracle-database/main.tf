@@ -13,7 +13,6 @@ data "template_file" "user_data" {
     account_id           = "${var.vpc_account_id}"
     bastion_inventory    = "${var.bastion_inventory}"
     application          = "${lookup(var.tags, "application")}"
-
     service_user_name             = "${var.ansible_vars["service_user_name"]}"
     database_global_database_name = "${var.ansible_vars["database_global_database_name"]}"
     database_sid                  = "${var.ansible_vars["database_sid"]}"
@@ -34,16 +33,14 @@ locals {
   database_size    = "${lookup(var.db_size, "database_size")}"
   instance_type    = "${lookup(var.db_size, "instance_type")}"
   iops             = "${lookup(var.db_size, "disk_iops")}"
-  disks_quantity   = "${lookup(var.db_size, "disks_quantity")}"
   size             = "${lookup(var.db_size, "disk_size")}"
   tags_name_prefix = "${var.environment_name}-${var.server_name}"
-  database_type    = "${lookup(var.ansible_vars, "database_type", "NOTSET")}"
-  database_standby_number = "${lookup(var.ansible_vars, "database_standby_number")}"
-  high_availability_count = "${lookup(var.db_size, "high_availability_count")}"
+  instance_count = "${lookup(var.ansible_vars, "database_type", "NOTSET") =="primary" || (lookup(var.ansible_vars, "database_standby_number") =="1" && lookup(var.db_size, "high_availability_count")  >="1")|| (lookup(var.ansible_vars, "database_standby_number")=="2" && lookup(var.db_size, "high_availability_count")>="2") ? 1 : 0 }"
+  disks_quantity = "${ local.instance_count >= 1 ? lookup(var.db_size, "disks_quantity") : 0 }"
 }
 
 resource "aws_instance" "oracle_db" {
-  count                  = "${(local.database_type=="primary") || (local.database_standby_number=="1" && local.high_availability_count<="2" && local.high_availability_count>="1") || (local.database_standby_number=="2" && local.high_availability_count="2")? 1 : 0 }"
+  count                  = "${local.instance_count}"
   ami                    = "${var.ami_id}"
   instance_type          = "${local.instance_type}"
   subnet_id              = "${var.db_subnet}"
@@ -66,12 +63,10 @@ resource "aws_instance" "oracle_db" {
     ignore_changes = ["ami", "user_data"]
   }
 
-
-
-
 }
 
 resource "aws_route53_record" "oracle_db_instance_internal" {
+  count   = "${local.instance_count}"
   zone_id = "${var.private_zone_id}"
   name    = "${var.server_name}"
   type    = "A"
@@ -80,9 +75,10 @@ resource "aws_route53_record" "oracle_db_instance_internal" {
 }
 
 resource "aws_route53_record" "oracle_db_instance_public" {
+  count   = "${local.instance_count}"
   zone_id = "${var.public_zone_id}"
   name    = "${var.server_name}"
   type    = "A"
   ttl     = "300"
   records = ["${aws_instance.oracle_db.private_ip}"]
-}
+} 
