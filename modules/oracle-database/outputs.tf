@@ -27,6 +27,8 @@ output "db_size_parameters" {
 
 output "db_tf_import" {
   value = {
-    instance_id = "${aws_instance.oracle_db.id}"
+    instance_id     = "${aws_instance.oracle_db.id}"
+    r53_id_internal = "${aws_route53_record.oracle_db_instance_internal.id}"
+    r53_id_public   = "${aws_route53_record.oracle_db_instance_public.id}"
   }
 }
