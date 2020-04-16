@@ -24,3 +24,9 @@ output "db_size_parameters" {
     iops_ratio     = "${local.iops/local.size} (50 max)"
   }
 }
+
+output "db_tf_import" {
+  value = {
+    instance_id = "${aws_instance.oracle_db.id}"
+  }
+}
