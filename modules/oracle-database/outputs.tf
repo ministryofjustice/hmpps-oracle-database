@@ -32,3 +32,17 @@ output "db_tf_import" {
     r53_id_public   = "${aws_route53_record.oracle_db_instance_public.zone_id}-${aws_route53_record.oracle_db_instance_public.name}_${aws_route53_record.oracle_db_instance_public.type}"
   }
 }
+
+output "r53_id_public" {
+  value = {
+    name = "${aws_route53_record.oracle_db_instance_public.name}"
+    fqdn = "${aws_route53_record.oracle_db_instance_public.fqdn}"
+  }
+}
+
+output "r53_id_internal" {
+  value = {
+    name = "${aws_route53_record.oracle_db_instance_internal.name}"
+    fqdn = "${aws_route53_record.oracle_db_instance_internal.fqdn}"
+  }
+}
