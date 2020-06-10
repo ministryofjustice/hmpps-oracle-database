@@ -80,6 +80,8 @@ cat << EOF > ~/requirements.yml
   src: https://github.com/ministryofjustice/hmpps-oracle-database-patches.git
 - name: oracle-db-parameters
   src: https://github.com/ministryofjustice/hmpps-oracle-database-parameters.git 
+- name: oracle-db-autotasks
+  src: https://github.com/ministryofjustice/hmpps-oracle-database-autotasks.git 
 EOF
 cat << EOF > ~/requirements_db.yml
 ---
@@ -89,6 +91,8 @@ cat << EOF > ~/requirements_db.yml
   src: https://github.com/ministryofjustice/hmpps-oracle-database-patches.git 
 - name: oracle-db-parameters
   src: https://github.com/ministryofjustice/hmpps-oracle-database-parameters.git 
+- name: oracle-db-autotasks
+  src: https://github.com/ministryofjustice/hmpps-oracle-database-autotasks.git 
 EOF
 
 /usr/bin/curl -o ~/users.yml https://raw.githubusercontent.com/ministryofjustice/hmpps-delius-ansible/master/group_vars/${bastion_inventory}.yml
