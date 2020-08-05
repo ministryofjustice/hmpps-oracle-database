@@ -27,16 +27,20 @@ data "template_file" "user_data" {
     database_backup_sys_passwd    = "${lookup(var.ansible_vars, "database_backup_sys_passwd", "NOTSET")}"
     database_backup_location      = "${lookup(var.ansible_vars, "database_backup_location", "NOTSET")}"
     asm_disks_quantity            = "${lookup(var.db_size, "disks_quantity")}"
+    asm_disks_quantity_data       = "${lookup(var.db_size, "disks_quantity_data")}"
   }
 }
 
 locals {
-  database_size    = "${lookup(var.db_size, "database_size")}"
-  instance_type    = "${lookup(var.db_size, "instance_type")}"
-  iops             = "${lookup(var.db_size, "disk_iops")}"
-  disks_quantity   = "${lookup(var.db_size, "disks_quantity")}"
-  size             = "${lookup(var.db_size, "disk_size")}"
-  tags_name_prefix = "${var.environment_name}-${var.server_name}"
+  database_size       = "${lookup(var.db_size, "database_size")}"
+  instance_type       = "${lookup(var.db_size, "instance_type")}"
+  disks_quantity      = "${lookup(var.db_size, "disks_quantity")}"
+  disks_quantity_data = "${lookup(var.db_size, "disks_quantity_data")}"
+  disk_iops_data      = "${lookup(var.db_size, "disk_iops_data")}"
+  disk_iops_flash     = "${lookup(var.db_size, "disk_iops_flash")}"
+  disk_size_data      = "${lookup(var.db_size, "disk_size_data")}"
+  disk_size_flash     = "${lookup(var.db_size, "disk_size_flash")}"
+  tags_name_prefix    = "${var.environment_name}-${var.server_name}"
 }
 
 resource "aws_instance" "oracle_db" {
