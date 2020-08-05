@@ -30,7 +30,7 @@
 module "dev_xvdca" {
   source            = "./modules/ebs-volume"
   create_volume     = "${local.disks_quantity >=1 ? true : false}"
-  availability_zone = "${aws_instance.oracle_db.*.availability_zone}"
+  availability_zone = "${aws_instance.oracle_db.availability_zone}"
   iops              = "${local.disks_quantity_data >=1 ? local.disk_iops_data : local.disk_iops_flash}"
   size              = "${local.disks_quantity_data >=1 ? local.disk_size_data : local.disk_size_flash}"
   kms_key_id        = "${var.kms_key_id}"
