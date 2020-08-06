@@ -16,12 +16,16 @@ output "ami_id" {
 
 output "db_size_parameters" {
   value = {
-    database_size  = "${local.database_size}"
-    iops           = "${local.iops}"
-    disks_quantity = "${local.disks_quantity}"
-    size           = "${local.size}"
-    total_storage  = "${local.disks_quantity*local.size}"
-    iops_ratio     = "${local.iops/local.size} (50 max)"
+    database_size       = "${local.database_size}"
+    disks_quantity      = "${local.disks_quantity}"
+    disks_quantity_data = "${local.disks_quantity_data}"
+    disk_iops_data      = "${local.disk_iops_data}"
+    disk_iops_flash     = "${local.disk_iops_flash}"
+    disk_size_data      = "${local.disk_size_data}"
+    disk_size_flash     = "${local.disk_size_flash}"
+    total_storage       = "${local.disks_quantity*local.disk_size_data}"
+    iops_ratio_data     = "${local.disk_iops_data/local.disk_size_data} (50 max)"
+    iops_ratio_flash    = "${local.disk_iops_flash/local.disk_size_flash} (50 max)"
   }
 }
 
