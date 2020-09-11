@@ -1,32 +1,36 @@
-
 variable "create_volume" {
   description = "create volume"
-  default = false
+  default     = false
 }
 
 variable "size" {
   description = "volume size"
-  default = 25
+  default     = 25
 }
 
 variable "iops" {
   description = "volume iops"
-  default = 1000
+  default     = 1000
 }
 
-variable "instance_id" {}
+variable "instance_id" {
+}
 
-variable "availability_zone" {}
+variable "availability_zone" {
+}
 
 variable "encrypted" {
   description = "is volume encrypted"
-  default = true
+  default     = true
 }
 
-variable "kms_key_id" {}
+variable "kms_key_id" {
+}
 
 variable "tags" {
-  type = "map"
+  type = map(string)
 }
 
-variable "device_name" {}
+variable "device_name" {
+}
+
