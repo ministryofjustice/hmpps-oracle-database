@@ -60,11 +60,11 @@ resource "aws_instance" "oracle_db" {
     iops                  = "1000"
   }
 
-  tags = merge(var.tags,
-    { Name = "${var.environment_name}-${var.server_name}" },
-    { InventoryHost = "${var.environment_name}-${var.server_name}" },
-    { Database = var.server_name }
-  )
+  tags = merge({
+    Name          = "${var.environment_name}-${var.server_name}"
+    InventoryHost = "${var.environment_name}-${var.server_name}"
+    Database      = var.server_name
+  }, var.tags)
 
   lifecycle {
     ignore_changes = [ami, user_data]
