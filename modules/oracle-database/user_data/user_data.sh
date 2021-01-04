@@ -13,13 +13,11 @@ PARAM=\$(aws ssm get-parameters \
 --with-decryption --name \
 "/${route53_sub_domain}/${project_name}/${app_name}-database/db/oradb_sys_password" \
 "/${route53_sub_domain}/${project_name}/${app_name}-database/db/oradb_system_password" \
-"/${route53_sub_domain}/${project_name}/${app_name}-database/db/oradb_sysman_password" \
 "/${route53_sub_domain}/${project_name}/${app_name}-database/db/oradb_dbsnmp_password" \
 "/${route53_sub_domain}/${project_name}/${app_name}-database/db/oradb_asmsnmp_password" \
 --query Parameters)
 export oradb_sys_password="\$(echo \$PARAM | jq '.[] | select(.Name | test("oradb_sys_password")) | .Value' --raw-output)"
 export oradb_system_password="\$(echo \$PARAM | jq '.[] | select(.Name | test("oradb_system_password")) | .Value' --raw-output)"
-export oradb_sysman_password="\$(echo \$PARAM | jq '.[] | select(.Name | test("oradb_sysman_password")) | .Value' --raw-output)"
 export oradb_dbsnmp_password="\$(echo \$PARAM | jq '.[] | select(.Name | test("oradb_dbsnmp_password")) | .Value' --raw-output)"
 export oradb_asmsnmp_password="\$(echo \$PARAM | jq '.[] | select(.Name | test("oradb_asmsnmp_password")) | .Value' --raw-output)"
 
@@ -117,7 +115,6 @@ asm_disks_quantity: "${asm_disks_quantity}"
 # These values are to be updated when the are injected and pulled from paramstore, consumed by oradb bootstrap
 # oradb_sys_password
 # oradb_system_password
-# oradb_sysman_password
 # oradb_dbsnmp_password
 # oradb_asmsnmp_password
 
@@ -157,7 +154,6 @@ ansible-playbook ~/bootstrap_db.yml \
 --extra-vars "{\
 'oradb_sys_password':'\$oradb_sys_password', \
 'oradb_system_password':'\$oradb_system_password', \
-'oradb_sysman_password':'\$oradb_sysman_password', \
 'oradb_dbsnmp_password':'\$oradb_dbsnmp_password', \
 'oradb_asmsnmp_password':'\$oradb_asmsnmp_password', \
 }" \
@@ -172,7 +168,6 @@ CONFIGURE_SWAP=true SELF_REGISTER=true ansible-playbook ~/bootstrap_users.yml \
 --extra-vars "{\
 'oradb_sys_password':'$oradb_sys_password', \
 'oradb_system_password':'$oradb_system_password', \
-'oradb_sysman_password':'$oradb_sysman_password', \
 'oradb_dbsnmp_password':'$oradb_dbsnmp_password', \
 'oradb_asmsnmp_password':'$oradb_asmsnmp_password', \
 }" \
