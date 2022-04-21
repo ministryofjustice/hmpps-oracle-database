@@ -21,6 +21,7 @@ output "db_size_parameters" {
     disks_quantity_data = local.disks_quantity_data
     disk_iops_data      = local.disk_iops_data
     disk_iops_flash     = local.disk_iops_flash
+    disk_iops_root      = local.disk_iops_root
     disk_size_data      = local.disk_size_data
     disk_size_flash     = local.disk_size_flash
     total_storage       = local.disks_quantity * local.disk_size_data
