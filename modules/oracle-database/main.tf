@@ -38,6 +38,7 @@ locals {
   disks_quantity_data = var.db_size["disks_quantity_data"]
   disk_iops_data      = var.db_size["disk_iops_data"]
   disk_iops_flash     = var.db_size["disk_iops_flash"]
+  disk_iops_root      = var.db_size["disk_iops_root"]
   disk_size_data      = var.db_size["disk_size_data"]
   disk_size_flash     = var.db_size["disk_size_flash"]
   tags_name_prefix    = "${var.environment_name}-${var.server_name}"
@@ -57,7 +58,7 @@ resource "aws_instance" "oracle_db" {
     delete_on_termination = true
     volume_size           = 256
     volume_type           = "io1"
-    iops                  = "1000"
+    iops                  = local.disk_iops_root
   }
 
   tags = merge({
