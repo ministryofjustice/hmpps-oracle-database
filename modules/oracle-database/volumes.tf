@@ -17,7 +17,8 @@
 # db_size_delius_core = {
 #   database_size  = "x_large"
 #   instance_type  = "r5.4xlarge"
-#
+#   disk_volume_type = "gp3"
+#   disk_volume_throughput = 750 # Only applicable if disk_volume_type = "gp3"
 #   disks_quantity      = 16           # Do not decrease this
 #   disks_quantity_data = 9
 #   disk_iops_data      = 1000
@@ -31,6 +32,8 @@ module "dev_xvdca" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 1 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_volume_type
+  throughput        = local.disk_volume_throughput # only relevant for gp3
   iops              = local.disks_quantity_data >= 1 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 1 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id

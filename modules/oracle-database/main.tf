@@ -32,16 +32,18 @@ data "template_file" "user_data" {
 }
 
 locals {
-  database_size       = var.db_size["database_size"]
-  instance_type       = var.db_size["instance_type"]
-  disks_quantity      = var.db_size["disks_quantity"]
-  disks_quantity_data = var.db_size["disks_quantity_data"]
-  disk_iops_data      = var.db_size["disk_iops_data"]
-  disk_iops_flash     = var.db_size["disk_iops_flash"]
-  disk_iops_root      = var.db_size["disk_iops_root"]
-  disk_size_data      = var.db_size["disk_size_data"]
-  disk_size_flash     = var.db_size["disk_size_flash"]
-  tags_name_prefix    = "${var.environment_name}-${var.server_name}"
+  database_size          = var.db_size["database_size"]
+  instance_type          = var.db_size["instance_type"]
+  disk_volume_type       = var.db_size["disk_volume_type"]
+  disk_volume_throughput = var.db_size["disk_volume_throughput"]
+  disks_quantity         = var.db_size["disks_quantity"]
+  disks_quantity_data    = var.db_size["disks_quantity_data"]
+  disk_iops_data         = var.db_size["disk_iops_data"]
+  disk_iops_flash        = var.db_size["disk_iops_flash"]
+  disk_iops_root         = var.db_size["disk_iops_root"]
+  disk_size_data         = var.db_size["disk_size_data"]
+  disk_size_flash        = var.db_size["disk_size_flash"]
+  tags_name_prefix       = "${var.environment_name}-${var.server_name}"
 }
 
 resource "aws_instance" "oracle_db" {
