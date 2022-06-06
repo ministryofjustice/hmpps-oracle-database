@@ -34,8 +34,10 @@ data "template_file" "user_data" {
 locals {
   database_size          = var.db_size["database_size"]
   instance_type          = var.db_size["instance_type"]
-  disk_volume_type       = var.db_size["disk_volume_type"]
-  disk_volume_throughput = var.db_size["disk_volume_throughput"]
+  # disk_type_root       = var.db_size["disk_type_root"]
+  # disk_throughput_root = var.db_size["disk_throughput_root"]
+  disk_type_data       = var.db_size["disk_type_data"]
+  disk_throughput_data = var.db_size["disk_throughput_data"]
   disks_quantity         = var.db_size["disks_quantity"]
   disks_quantity_data    = var.db_size["disks_quantity_data"]
   disk_iops_data         = var.db_size["disk_iops_data"]
