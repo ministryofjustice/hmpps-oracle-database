@@ -32,20 +32,20 @@ data "template_file" "user_data" {
 }
 
 locals {
-  database_size          = var.db_size["database_size"]
-  instance_type          = var.db_size["instance_type"]
+  database_size        = var.db_size["database_size"]
+  instance_type        = var.db_size["instance_type"]
   disk_type_root       = var.db_size["disk_type_root"]
   disk_throughput_root = var.db_size["disk_throughput_root"]
   disk_type_data       = var.db_size["disk_type_data"]
   disk_throughput_data = var.db_size["disk_throughput_data"]
-  disks_quantity         = var.db_size["disks_quantity"]
-  disks_quantity_data    = var.db_size["disks_quantity_data"]
-  disk_iops_data         = var.db_size["disk_iops_data"]
-  disk_iops_flash        = var.db_size["disk_iops_flash"]
-  disk_iops_root         = var.db_size["disk_iops_root"]
-  disk_size_data         = var.db_size["disk_size_data"]
-  disk_size_flash        = var.db_size["disk_size_flash"]
-  tags_name_prefix       = "${var.environment_name}-${var.server_name}"
+  disks_quantity       = var.db_size["disks_quantity"]
+  disks_quantity_data  = var.db_size["disks_quantity_data"]
+  disk_iops_data       = var.db_size["disk_iops_data"]
+  disk_iops_flash      = var.db_size["disk_iops_flash"]
+  disk_iops_root       = var.db_size["disk_iops_root"]
+  disk_size_data       = var.db_size["disk_size_data"]
+  disk_size_flash      = var.db_size["disk_size_flash"]
+  tags_name_prefix     = "${var.environment_name}-${var.server_name}"
 }
 
 resource "aws_instance" "oracle_db" {
@@ -62,7 +62,7 @@ resource "aws_instance" "oracle_db" {
     delete_on_termination = true
     volume_size           = 256
     volume_type           = local.disk_type_root
-    throughput = local.disk_type_root == "gp3" ? local.disk_throughput_root : null
+    throughput            = local.disk_type_root == "gp3" ? local.disk_throughput_root : null
     iops                  = local.disk_iops_root
   }
 
