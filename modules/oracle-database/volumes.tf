@@ -15,22 +15,28 @@
 # For this reason we shall enable up to 24 as the base AMI will have 2 already attached.
 
 # db_size_delius_core = {
-#   database_size  = "x_large"
-#   instance_type  = "r5.4xlarge"
-#
-#   disks_quantity      = 16           # Do not decrease this
-#   disks_quantity_data = 9
-#   disk_iops_data      = 1000
-#   disk_iops_flash     = 500
-#   disk_size_data      = 1000 # Do not decrease this
-#   disk_size_flash     = 1000 # Do not decrease this
-#   # total_storage  = 16000 # This should equal disks_quantity x disk_size
+#   database_size        = "x_large"
+#   instance_type        = "r5.4xlarge"
+#   disk_type_data       = "io1" # Requires iops and throughput to be set
+#   disk_throughput_data = 750 # Only relevant when disks_volume_type = "gp3"
+#   disk_type_root       = "io1" # Requires iops and throughput to be set
+#   disk_throughput_root = 125 # Only relevant when disks_volume_type = "gp3"
+#   disks_quantity       = 16 # Do not decrease this
+#   disks_quantity_data  = 10
+#   disk_iops_root       = 1000
+#   disk_iops_data       = 1000
+#   disk_iops_flash      = 500
+#   disk_size_data       = 1000 # Do not decrease this
+#   disk_size_flash      = 1000 # Do not decrease this
+#   ## total_storage     = 16000 # This should equal disks_quantity x disk_size
 # }
 
 module "dev_xvdca" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 1 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 1 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 1 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -48,6 +54,8 @@ module "dev_xvdcb" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 2 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 2 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 2 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -65,6 +73,8 @@ module "dev_xvdcc" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 3 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 3 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 3 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -82,6 +92,8 @@ module "dev_xvdcd" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 4 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 4 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 4 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -99,6 +111,8 @@ module "dev_xvdce" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 5 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 5 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 5 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -116,6 +130,8 @@ module "dev_xvdcf" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 6 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 6 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 6 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -133,6 +149,8 @@ module "dev_xvdcg" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 7 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 7 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 7 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -150,6 +168,8 @@ module "dev_xvdch" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 8 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 8 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 8 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -167,6 +187,8 @@ module "dev_xvdci" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 9 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 9 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 9 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -184,6 +206,8 @@ module "dev_xvdcj" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 10 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 10 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 10 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -201,6 +225,8 @@ module "dev_xvdck" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 11 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 11 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 11 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -218,6 +244,8 @@ module "dev_xvdcl" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 12 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 12 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 12 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -235,6 +263,8 @@ module "dev_xvdcm" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 13 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 13 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 13 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -252,6 +282,8 @@ module "dev_xvdcn" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 14 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 14 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 14 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -269,6 +301,8 @@ module "dev_xvdco" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 15 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 15 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 15 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -286,6 +320,8 @@ module "dev_xvdcp" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 16 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 16 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 16 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -303,6 +339,8 @@ module "dev_xvdcq" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 17 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 17 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 17 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -320,6 +358,8 @@ module "dev_xvdcr" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 18 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 18 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 18 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -337,6 +377,8 @@ module "dev_xvdcs" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 19 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 19 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 19 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -354,6 +396,8 @@ module "dev_xvdct" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 20 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 20 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 20 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -371,6 +415,8 @@ module "dev_xvdcu" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 21 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 21 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 21 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -388,6 +434,8 @@ module "dev_xvdcv" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 22 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 22 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 22 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -405,6 +453,8 @@ module "dev_xvdcw" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 23 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 23 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 23 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id
@@ -422,6 +472,8 @@ module "dev_xvdcx" {
   source            = "./modules/ebs-volume"
   create_volume     = local.disks_quantity >= 24 ? true : false
   availability_zone = aws_instance.oracle_db.availability_zone
+  type              = local.disk_type_data
+  throughput        = local.disk_throughput_data # only relevant for gp3
   iops              = local.disks_quantity_data >= 24 ? local.disk_iops_data : local.disk_iops_flash
   size              = local.disks_quantity_data >= 24 ? local.disk_size_data : local.disk_size_flash
   kms_key_id        = var.kms_key_id

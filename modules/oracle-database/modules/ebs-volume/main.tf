@@ -1,8 +1,9 @@
 resource "aws_ebs_volume" "oracle_db" {
   count             = var.create_volume ? 1 : 0
   availability_zone = var.availability_zone
-  type              = "io1"
+  type              = var.type
   iops              = var.iops
+  throughput        = var.type == "gp3" ? var.throughput : null
   size              = var.size
   encrypted         = var.encrypted
   kms_key_id        = var.kms_key_id
