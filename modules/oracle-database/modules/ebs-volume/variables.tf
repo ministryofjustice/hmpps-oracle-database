@@ -9,7 +9,7 @@ variable "size" {
 }
 
 variable "type" {
-  description = "The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1 (Default: gp2)"
+  description = "The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1"
   default     = "io1"
   type        = string
 }
