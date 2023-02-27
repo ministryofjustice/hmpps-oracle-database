@@ -52,3 +52,6 @@ output "r53_id_internal" {
   }
 }
 
+output "cpu_core_count" {
+  value = aws_instance.oracle_db.cpu_core_count
+}
