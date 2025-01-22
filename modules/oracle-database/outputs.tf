@@ -1,9 +1,9 @@
 output "public_fqdn" {
-  value = aws_route53_record.oracle_db_instance_public.fqdn
+  value = length(aws_route53_record.oracle_db_instance_public) > 0 ? aws_route53_record.oracle_db_instance_public[0].fqdn : null
 }
 
 output "internal_fqdn" {
-  value = aws_route53_record.oracle_db_instance_internal.fqdn
+  value = length(aws_route53_record.oracle_db_instance_internal) > 0 ? aws_route53_record.oracle_db_instance_internal[0].fqdn : null
 }
 
 output "private_ip" {
@@ -33,22 +33,22 @@ output "db_size_parameters" {
 output "db_tf_import" {
   value = {
     instance_id     = aws_instance.oracle_db.id
-    r53_id_internal = "${aws_route53_record.oracle_db_instance_internal.zone_id}-${aws_route53_record.oracle_db_instance_internal.name}_${aws_route53_record.oracle_db_instance_internal.type}"
-    r53_id_public   = "${aws_route53_record.oracle_db_instance_public.zone_id}-${aws_route53_record.oracle_db_instance_public.name}_${aws_route53_record.oracle_db_instance_public.type}"
+    r53_id_internal = length(aws_route53_record.oracle_db_instance_internal) > 0 ? "${aws_route53_record.oracle_db_instance_internal[0].zone_id}-${aws_route53_record.oracle_db_instance_internal[0].name}_${aws_route53_record.oracle_db_instance_internal[0].type}" : null
+    r53_id_public   = length(aws_route53_record.oracle_db_instance_public) > 0 ? "${aws_route53_record.oracle_db_instance_public[0].zone_id}-${aws_route53_record.oracle_db_instance_public[0].name}_${aws_route53_record.oracle_db_instance_public[0].type}" : null
   }
 }
 
 output "r53_id_public" {
   value = {
-    name = aws_route53_record.oracle_db_instance_public.name
-    fqdn = aws_route53_record.oracle_db_instance_public.fqdn
+    name = length(aws_route53_record.oracle_db_instance_public) > 0 ? aws_route53_record.oracle_db_instance_public[0].name : null
+    fqdn = length(aws_route53_record.oracle_db_instance_public) > 0 ? aws_route53_record.oracle_db_instance_public[0].fqdn : null
   }
 }
 
 output "r53_id_internal" {
   value = {
-    name = aws_route53_record.oracle_db_instance_internal.name
-    fqdn = aws_route53_record.oracle_db_instance_internal.fqdn
+    name = length(aws_route53_record.oracle_db_instance_internal) > 0 ? aws_route53_record.oracle_db_instance_internal[0].name : null
+    fqdn = length(aws_route53_record.oracle_db_instance_internal) > 0 ? aws_route53_record.oracle_db_instance_internal[0].fqdn : null
   }
 }
 
