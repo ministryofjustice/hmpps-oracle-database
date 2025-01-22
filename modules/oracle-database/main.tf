@@ -78,6 +78,7 @@ resource "aws_instance" "oracle_db" {
 }
 
 resource "aws_route53_record" "oracle_db_instance_internal" {
+  count   = var.create_dns_records ? 1 : 0
   zone_id = var.private_zone_id
   name    = var.server_name
   type    = "A"
@@ -86,6 +87,7 @@ resource "aws_route53_record" "oracle_db_instance_internal" {
 }
 
 resource "aws_route53_record" "oracle_db_instance_public" {
+  count   = var.create_dns_records? 1 : 0
   zone_id = var.public_zone_id
   name    = var.server_name
   type    = "A"

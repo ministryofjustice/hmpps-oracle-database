@@ -116,3 +116,9 @@ variable "ansible_vars" {
   type        = map(string)
 }
 
+
+variable "create_dns_records" {
+  description = "Create the DB internal and public records"
+  type        = bool
+  default     = true
+}
