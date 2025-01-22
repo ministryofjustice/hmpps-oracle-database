@@ -33,9 +33,6 @@ output "db_size_parameters" {
 output "db_tf_import" {
   value = {
     instance_id     = aws_instance.oracle_db.id
-    r53_id_internal = "${aws_route53_record.oracle_db_instance_internal.zone_id}-${aws_route53_record.oracle_db_instance_internal.name}_${aws_route53_record.oracle_db_instance_internal.type}"
-    r53_id_public   = "${aws_route53_record.oracle_db_instance_public.zone_id}-${aws_route53_record.oracle_db_instance_public.name}_${aws_route53_record.oracle_db_instance_public.type}"
-
     r53_id_internal = length(aws_route53_record.oracle_db_instance_internal) > 0 ? "${aws_route53_record.oracle_db_instance_internal[0].zone_id}-${aws_route53_record.oracle_db_instance_internal[0].name}_${aws_route53_record.oracle_db_instance_internal[0].type}" : null
     r53_id_public   = length(aws_route53_record.oracle_db_instance_public) > 0 ? "${aws_route53_record.oracle_db_instance_public[0].zone_id}-${aws_route53_record.oracle_db_instance_public[0].name}_${aws_route53_record.oracle_db_instance_public[0].type}" : null
   }
